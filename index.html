@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f2e8">
+<title>全台地藏禪寺・祥德寺｜導航服務</title>
+<style>
+:root{--ink:#332b22;--muted:#81766a;--gold:#a87935;--gold2:#d6b778;--paper:#fbf8f1;--line:#e9dfcf;--green:#526b55}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f2eadb 0,#fbf8f1 260px);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif}
+main{width:min(100% - 28px,680px);margin:0 auto;padding:30px 0 44px}
+.hero{text-align:center;padding:18px 12px 26px}
+.symbol{font-size:35px;line-height:1.4}
+.eyebrow{font-size:12px;letter-spacing:.24em;color:var(--gold);font-weight:700;margin:7px 0}
+h1{font-size:26px;letter-spacing:.08em;margin:7px 0 9px;font-weight:750}
+.sub{font-size:14px;color:var(--muted);line-height:1.7;margin:0}
+.tip{margin:18px auto 0;padding:11px 14px;border:1px solid #e7d8bd;border-radius:14px;background:#fffaf0;color:#766343;font-size:12px;line-height:1.65;max-width:460px}
+.section-title{display:flex;align-items:center;gap:12px;margin:12px 2px 14px;color:#78664d;font-size:13px;letter-spacing:.12em;font-weight:700}
+.section-title:after{content:"";height:1px;background:var(--line);flex:1}
+.cards{display:grid;gap:13px}
+.card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:18px;padding:17px 16px 15px;box-shadow:0 5px 18px rgba(80,57,25,.045)}
+.card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.temple-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#f5ecdc;font-size:21px;flex:none}
+h2{font-size:17px;margin:0;letter-spacing:.025em}
+.region{margin-left:auto;font-size:11px;color:#92774e;background:#f8f1e5;border-radius:99px;padding:5px 9px;white-space:nowrap}
+.address{font-size:13px;color:#655c52;line-height:1.65;margin:0 0 7px;padding-left:1px}
+.phone{display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:13px;text-decoration:none;font-weight:650;padding:4px 0 12px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:43px;border-radius:12px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.02em}
+.btn-primary{background:var(--green);color:white}
+.btn-secondary{border:1px solid #d8c9ae;color:#735b36;background:#fffdf9}
+.note{font-size:11px;color:#9a8e80;text-align:center;margin:22px 8px 0;line-height:1.7}
+footer{text-align:center;color:#a09280;font-size:11px;margin-top:22px;letter-spacing:.08em}
+@media(min-width:560px){.cards{grid-template-columns:1fr 1fr}.card:last-child{grid-column:1/-1}.hero{padding-top:25px}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="symbol">⛩️</div>
+    <div class="eyebrow">TEMPLE GUIDE · TAIWAN</div>
+    <h1>全台地藏禪寺・祥德寺</h1>
+    <p class="sub">選擇您要前往的道場<br>一鍵開啟手機地圖，從目前位置開始導航</p>
+    <div class="tip">📍 導航時請允許地圖 App 使用您的位置，系統會以目前位置規劃路線。</div>
+  </header>
+
+  <div class="section-title">選擇目的地</div>
+  <section class="cards" id="temples"></section>
+  <p class="note">「開始導航」會開啟 Google 地圖；若手機未安裝 Google 地圖，會改以瀏覽器開啟。<br>「Apple 地圖」適用於 iPhone。</p>
+  <footer>願一路平安・諸事吉祥</footer>
+</main>
+<script>
+const temples = [
+  {name:"台北地藏禪寺",region:"台北・士林",phone:"(02) 2810-0237",tel:"0228100237",address:"台北市士林區延平北路7段189號"},
+  {name:"台中祥德寺",region:"台中・北屯",phone:"(04) 2239-7013",tel:"0422397013",address:"台中市北屯區大坑橫坑巷95號"},
+  {name:"高雄地藏禪寺",region:"高雄・左營",phone:"(07) 343-4811",tel:"073434811",address:"高雄市左營區文學路510號"},
+  {name:"花蓮地藏禪寺",region:"花蓮市",phone:"(03) 869-1120",tel:"038691120",address:"花蓮市國興一街288號"},
+  {name:"花蓮祥德寺",region:"花蓮・天祥",phone:"(03) 833-6036",tel:"038336036",address:"花蓮縣秀林鄉富世村天祥10號（太魯閣國家公園天祥風景區內）"}
+];
+const root=document.getElementById("temples");
+temples.forEach((t,i)=>{
+  const destination=t.name+" "+t.address;
+  const google="https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(destination)+"&travelmode=driving&dir_action=navigate";
+  const apple="https://maps.apple.com/?daddr="+encodeURIComponent(t.address)+"&dirflg=d";
+  const card=document.createElement("article");
+  card.className="card";
+  card.innerHTML=`
+    <div class="card-top"><div class="temple-icon">⛩️</div><h2>${t.name}</h2><span class="region">${t.region}</span></div>
+    <p class="address">📍 ${t.address}</p>
+    <a class="phone" href="tel:${t.tel}">☎ 撥打電話　${t.phone}</a>
+    <div class="actions">
+      <a class="btn btn-primary" href="${google}" target="_blank" rel="noopener">➤ 開始導航</a>
+      <a class="btn btn-secondary" href="${apple}">Apple 地圖</a>
+    </div>`;
+  root.appendChild(card);
+});
+</script>
+</body>
+</html>
